@@ -151,30 +151,6 @@
 
     <script>
         // Example placeholder WebSocket & chat
-        connectWs();
-        ws.onopen = () => ws.send(msg_host_join());
-        ws.onmessage = function (event) {
-            const messages = document.getElementById('chatBox');
-            const message = document.createElement('li');
-            message.className = 'chat-item';
-            messages.appendChild(message);
-
-            let data;
-            try { data = JSON.parse(event.data); } catch { data = { cmd: "raw", data: event.data }; }
-            console.log(data)
-            if (data.cmd === "text") {
-                const name = document.createElement('strong');
-                name.textContent = data.from + ": ";
-                message.appendChild(name);
-                message.appendChild(document.createTextNode(data.data));
-            } else {
-                message.textContent = event.data;
-            }
-            messages.scrollTop = messages.scrollHeight;
-        }
-
-
-
 
         function openQuestionModal(q) {
             document.getElementById("modalTitle").textContent = q.title;

@@ -15,6 +15,10 @@ function msg_host_join() {
   });
 }
 
+window.addEventListener("wsConnected", (event) => {
+  event.ws.send(msg_host_join());
+});
+
 function startGame() {
 
 }
