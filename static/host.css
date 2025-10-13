@@ -1,0 +1,76 @@
+header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1030;
+            height: 60px; /* explicitly set */
+        }
+
+        body {
+            padding-top: 60px; /* match header height */
+            background-color: #f8f9fa;
+        }
+
+
+        #questionList,
+        #chatBox {
+            max-height: 500px;
+            overflow-y: auto;
+        }
+
+        #questionList li {
+            padding: 0.5rem 0.75rem;
+            border-radius: 0.3rem;
+            cursor: pointer;
+        }
+
+        #questionList li:hover {
+            background-color: #e9ecef;
+        }
+
+        .chat-item {
+            margin-bottom: 0.25rem;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.5rem;
+        }
+
+        .chat-item.from-host {
+            background-color: #d1e7dd;
+            align-self: flex-start;
+        }
+
+        .chat-item.from-player {
+            background-color: #cff4fc;
+            align-self: flex-end;
+        }
+
+        .chat-item strong {
+            color: #0d6efd;
+            margin-right: 0.25rem;
+        }
+
+        .answer-group input[type="radio"] {
+            margin-top: 0.4rem;
+        }
+
+        .modal-body ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .correct-badge {
+            background-color: #198754;
+            color: white;
+            font-size: 0.8em;
+            margin-left: 0.5rem;
+            padding: 0.2em 0.4em;
+            border-radius: 0.25rem;
+        }
+
+        .answers-list {
+            font-size: 0.9rem;
+        }
+
+        .answers-list li {
+            margin-bottom: 0.25rem;
+        }
