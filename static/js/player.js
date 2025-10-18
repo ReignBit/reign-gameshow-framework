@@ -1,10 +1,4 @@
 
-function ws_player_onmessage(event) {
-
-}
-
-function ws_player_onload(event) {
-
-}
-
-window.ishost = 0;
+window.addEventListener("wsConnected", (event) => {
+  window.ws.send(msg_ply_join(playerName));
+});

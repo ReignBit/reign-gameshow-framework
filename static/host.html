@@ -52,6 +52,10 @@
 
             <!-- Chat panel -->
             <div class="col-md-4 d-flex flex-column">
+                <h4>Players</h4>
+                <div class="card flex-grow-1 mb-2 p-2 d-flex flex-column" id="playerBox">
+                    <!-- Messages appended here -->
+                </div>
                 <h4>Chat</h4>
                 <div class="card flex-grow-1 mb-2 p-2 d-flex flex-column" id="chatBox">
                     <!-- Messages appended here -->
@@ -151,7 +155,7 @@
 
     <script>
         // Example placeholder WebSocket & chat
-
+        
         function openQuestionModal(q) {
             document.getElementById("modalTitle").textContent = q.title;
             document.getElementById("modalAnswers").innerHTML = `
@@ -165,7 +169,9 @@
             modal.show();
         }
 
-        
+        window.onload = (e) => {
+            connectWs();
+        }
     </script>
 
 </body>

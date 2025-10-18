@@ -8,6 +8,12 @@ function msg_ply_join(name) {
     });
 }
 
+function msg_heartbeat() {
+    return JSON.stringify({
+        cmd: "heartbeat-response"
+    })
+}
+
 function msg_text(text) {
 
     return JSON.stringify({

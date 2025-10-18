@@ -11,9 +11,12 @@ load_dotenv()
 from lobby import Lobby, Player
 
 import os
+import asyncio
 import database, schemas
 
 database.Base.metadata.create_all(bind=database.engine)
+
+running = True
 
 def is_auth(auth: str):
     if not auth:
@@ -110,6 +113,21 @@ def delete_question(
 
 # ------------ Websocket stuff -----------------------
 
+hb_loop: asyncio.Task = None
+
+async def heartbeat_loop():
+    global running
+    print(f"[HEARTBEAT] Task started.")
+    while running:
+        await lobby.on_heartbeat_tick()
+        await asyncio.sleep(1)
+
+@app.on_event("startup")
+async def ws_heartbeat():
+    global hb_loop
+    hb_loop = asyncio.create_task(heartbeat_loop())
+
+
 @app.websocket("/ws")
 async def ws_endpoint(ws: WebSocket):
     await ws.accept()
@@ -118,13 +136,13 @@ async def ws_endpoint(ws: WebSocket):
     try:
         while True:
             msg = await ws.receive_json()
-            print(msg)
+            print("raw recv:", msg)
             if msg['cmd'] == "join":
                 player = await lobby.create_player(ws, msg)
                 player_ws[ws] = player
 
             else:
-                await lobby.on_event(msg)
+                await lobby.on_event(msg, ws)
 
     except WebSocketDisconnect:
         player = player_ws.pop(ws, None)
@@ -132,3 +150,10 @@ async def ws_endpoint(ws: WebSocket):
             await lobby.destroy_player(player)
         print(f"WS disconnected: {ws.client.host}:{ws.client.port}")
         print(lobby.players)
+
+
+@app.on_event("shutdown")
+async def stop():
+    global running, hb_loop
+    running = False
+    hb_loop.cancel()
